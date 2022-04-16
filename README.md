@@ -6,4 +6,4 @@ Retorna la minima cantidad de monedas necesarias para llegar a esa suma total, r
 
 ## unique_way.py
 
-Retorna la cantidad de diferentes formas posibles para generar un entero Suma, en base a un array de enteros
+Retorna la cantidad de diferentes formas posibles para generar un entero Suma, en base a un array de enteros, sin combinaciones repetidas

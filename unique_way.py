@@ -32,22 +32,26 @@ amount = 5
 
 def total_unique_ways(total, coins):
     subproblems_arr = [ [ 0 for i in range(total+1)] for j in range(len(coins)+1)]
-    # Si tengo que generar a 0, y tengo 0 monedas, solo hay una forma: haciendo nada
-    subproblems_arr[0][0] = 1
-    # para el resto de los elementos de esa fila, ya el subtotal a generar sera > 0, por lo que usando 0 monedas no sera posible. Por eso las soluciones para estos subproblemas es de 0
+   
+    for i in range(len(coins)+1):
+        subproblems_arr[i][0] = 1 
+    for j in range(1,total+1):
+        subproblems_arr[0][j] = 0
+    # solo hay una forma de generar al subtotal 0: tomando ninguna moneda, por eso es una combinacion posible
+    #con 0 monedas, solo es posible formar el subtotal 0, el resto no es posible, por lo que hya 0 formas para el resto de la fila 0
+    # ESTOS serian mis semillas, a partir de aca puedo aplicar el algoritmo
     
-    # Analizando ahora la primer fila:
-    # Si tengo en cuenta  la moneda 1, y quiero generar al subtotal 0, si uso a esta moneda en cuestion ya supero al subtotal,
-    # por lo que la solucion dependera de no considerar a 1, es decir, del array vacio en este caso.
-    # Por lo que la solucion a este subproblema sera 1. Y esto se repetira para toda la columna 1, porque cada moneda tendra un valor mayor a 0
-    
-    for row in range(len(coins)+1):
-        for col in range(total+1):
+    for row in range(1, len(coins)+1):
+        for col in range(1, total+1):
             print(f"Subproblema para el subtotal {col} con las monedas{coins[:row]}")
+            aux1 = subproblems_arr[row - 1][col] if (row - 1)>=0 else 0
+            last_coin_inserted = coins[:row][-1] if len(coins[:row])>0 else 0 
+            aux2 = subproblems_arr[row][col-last_coin_inserted] if (col-last_coin_inserted) >= 0 else 0
+            subproblems_arr[row][col] = aux1 + aux2
             
     
     
     print(subproblems_arr)
-    return subproblems_arr[-1]
+    return subproblems_arr[-1][-1]
 
 print(total_unique_ways(amount, arr))
